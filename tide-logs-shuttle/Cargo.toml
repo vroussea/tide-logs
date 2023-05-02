@@ -1,0 +1,14 @@
+[package]
+name = "tide-logs-shuttle"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = "1.0.160"
+shuttle-runtime = "0.14.0"
+shuttle-tide = "0.14.0"
+tokio = "1.27.0"
+tide = "0.16.0"
