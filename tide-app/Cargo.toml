@@ -9,4 +9,3 @@ edition = "2021"
 serde.workspace = true
 tide.workspace = true
 tide-tracing = "0.0.12"
-tracing-tree = "0.2.3"

@@ -4,6 +4,7 @@ use tracing_tree::HierarchicalLayer;
 #[async_std::main]
 async fn main() -> tide::Result<()> {
     dotenvy::dotenv()?;
+    tracing_log::env_logger::init();
 
     let subscriber = Registry::default().with(HierarchicalLayer::new(2));
     tracing::subscriber::set_global_default(subscriber).unwrap();
