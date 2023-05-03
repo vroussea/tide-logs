@@ -17,3 +17,6 @@ Cargo.lock
 # Added by cargo
 
 /target
+
+# Don't check in your .env file
+.env
