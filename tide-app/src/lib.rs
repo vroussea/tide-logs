@@ -1,3 +1,5 @@
+use tide_tracing::TraceMiddleware;
+
 use tide::{
     convert::Deserialize,
     log::{debug, error, info, trace, warn},
@@ -13,7 +15,7 @@ struct Body {
 pub fn app() -> Server<()> {
     let mut app = tide::new();
 
-    app.with(tide::log::LogMiddleware::new());
+    app.with(TraceMiddleware::new());
     app.at("/").get(root);
     app.at("/post").post(post_handler);
 
