@@ -1,30 +1,15 @@
-use tide::prelude::*;
-use tide::Request;
-
-#[derive(Debug, Deserialize)]
-struct Body {
-    something: Option<String>,
-}
+use tracing_subscriber::{layer::SubscriberExt, registry::Registry};
+use tracing_tree::HierarchicalLayer;
 
 #[async_std::main]
 async fn main() -> tide::Result<()> {
-    pretty_env_logger::init();
+    dotenvy::dotenv()?;
 
-    let mut app = tide::new();
+    let subscriber = Registry::default().with(HierarchicalLayer::new(2));
+    tracing::subscriber::set_global_default(subscriber).unwrap();
 
-    app.with(tide::log::LogMiddleware::new());
-    app.at("/").get(|_| async { Ok("Hello, world!") });
-    app.at("/helloworld").post(hello_world);
+    let app = tide_app::app();
     app.listen("127.0.0.1:8080").await?;
 
     Ok(())
-}
-
-async fn hello_world(mut req: Request<()>) -> tide::Result {
-    let Body { something } = req.body_json().await?;
-    if let Some(text) = something {
-        Ok(format!("Hello World ! {}\n", text).into())
-    } else {
-        Ok("Hello World !\n".into())
-    }
 }
